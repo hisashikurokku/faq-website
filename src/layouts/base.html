@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="{{ lang | default: 'vi' }}">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="/css/style.css" />
+</head>
+
+<body>
+    <main>
+        {{ content }}
+    </main>
+    <div class="top-controls">
+        <select id="lang-select" onchange="changeLanguage(this.value)">
+            <option value="en" {% if page.lang=="en" %}selected{% endif %}>English</option>
+            <option value="ja" {% if page.lang=="ja" %}selected{% endif %}>日本語</option>
+            <option value="vi" {% if page.lang=="vi" %}selected{% endif %}>Tiếng Việt</option>
+        </select>
+
+        <button id="theme-toggle" aria-label="Toggle theme">
+            <img id="theme-icon" alt="">
+        </button>
+    </div>
+
+    <script>
+        // ---- language switcher ----
+        function changeLanguage(lang) {
+            window.location.href = "/" + lang + "/";
+        }
+
+        const langSelect = document.getElementById("lang-select");
+
+        const match = location.pathname.match(/^\/(vi|en|ja)(\/|$)/);
+        if (match) langSelect.value = match[1];
+
+        langSelect.addEventListener("change", () => {
+            const lang = langSelect.value;
+            window.location.assign(window.location.origin + lang);
+        });
+        // ---- theme switcher ----
+        const toggle = document.getElementById("theme-toggle");
+        const icon = document.getElementById("theme-icon");
+        const root = document.documentElement;
+
+        const icons = {
+            light: "/assets/icons/sun.svg",
+            dark: "/assets/icons/moon.svg"
+        };
+
+        const saved = localStorage.getItem("theme");
+        root.dataset.theme = saved || "light";
+
+        function updateIcon() {
+            icon.src = icons[root.dataset.theme];
+        }
+
+        updateIcon();
+
+        toggle.addEventListener("click", () => {
+            root.dataset.theme =
+                root.dataset.theme === "dark" ? "light" : "dark";
+            localStorage.setItem("theme", root.dataset.theme);
+            updateIcon();
+        });
+    </script>
+</body>
+
+</html>
