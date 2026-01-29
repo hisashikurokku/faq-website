@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <title>{{ title }}</title>
-    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="{{ '/css/style.css' | url }}">
 </head>
 
 <body>
@@ -25,27 +25,34 @@
 
     <script>
         // ---- language switcher ----
+        const BASE_URL = "{{ '/' | url }}";
+
         function changeLanguage(lang) {
-            window.location.href = "/" + lang + "/";
+            window.location.href = `${BASE_URL}${lang}/`;
         }
 
         const langSelect = document.getElementById("lang-select");
 
-        const match = location.pathname.match(/^\/(vi|en|ja)(\/|$)/);
-        if (match) langSelect.value = match[1];
+        if (langSelect) {
+            const path = location.pathname.replace(BASE_URL, "");
+            const match = path.match(/^(vi|en|ja)(\/|$)/);
 
-        langSelect.addEventListener("change", () => {
-            const lang = langSelect.value;
-            window.location.assign(window.location.origin + lang);
-        });
+            if (match) {
+                langSelect.value = match[1];
+            }
+
+            langSelect.addEventListener("change", () => {
+                changeLanguage(langSelect.value);
+            });
+        }
         // ---- theme switcher ----
         const toggle = document.getElementById("theme-toggle");
         const icon = document.getElementById("theme-icon");
         const root = document.documentElement;
 
         const icons = {
-            light: "/assets/icons/sun.svg",
-            dark: "/assets/icons/moon.svg"
+            light: "{{ '/assets/icons/sun.svg' | url }}",
+            dark: "{{ '/assets/icons/moon.svg' | url }}"
         };
 
         const saved = localStorage.getItem("theme");
