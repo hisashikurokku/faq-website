@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>FAQ</title>
+    <link rel="stylesheet" href="/faq-website/css/style.css">
+</head>
+
+<body>
+    <main>
+        <h1>Frequently Asked Tet Questions</h1>
+<h2>1. What are your college and major?</h2>
+<p>College: University of Information Technology - Vietnam National University HCMC</p>
+<p>Major: Computer Engineering (CE)</p>
+<h2>2. What do you do in CE?</h2>
+<p>CE focuses on building components such as processors, memory systems, embedded devices and networks while assuring that software can efficiently interact with the underlying hardware. Computer engineers work on everything from microchips and robotics to operating systems and high-performance computing, emphasizing performance, reliability and efficiency.</p>
+<p>This major does not include fixing TVs or fridges.</p>
+<h2>3. When are you graduating?</h2>
+<p>Late 2026 or early 2027.</p>
+<h2>4. When are you getting an internship?</h2>
+<p>This semester, from March to June.</p>
+<h2>5. How old are you?</h2>
+<p>21 years old.</p>
+<h2>6. Have you got a girlfriend?</h2>
+<p>No.</p>
+<h2>7. When are you getting married?</h2>
+<p>In 10 years perhaps.</p>
+
+    </main>
+    <div class="top-controls">
+        <select id="lang-select" onchange="changeLanguage(this.value)">
+            <option value="en" >English</option>
+            <option value="ja" >日本語</option>
+            <option value="vi" >Tiếng Việt</option>
+        </select>
+
+        <button id="theme-toggle" aria-label="Toggle theme">
+            <img id="theme-icon" alt="">
+        </button>
+    </div>
+
+    <script>
+        // ---- language switcher ----
+        function changeLanguage(lang) {
+            window.location.href = "/" + lang + "/";
+        }
+
+        const langSelect = document.getElementById("lang-select");
+
+        const match = location.pathname.match(/^\/(vi|en|ja)(\/|$)/);
+        if (match) langSelect.value = match[1];
+
+        langSelect.addEventListener("change", () => {
+            const lang = langSelect.value;
+            window.location.assign(window.location.origin + lang);
+        });
+        // ---- theme switcher ----
+        const toggle = document.getElementById("theme-toggle");
+        const icon = document.getElementById("theme-icon");
+        const root = document.documentElement;
+
+        const icons = {
+            light: "/assets/icons/sun.svg",
+            dark: "/assets/icons/moon.svg"
+        };
+
+        const saved = localStorage.getItem("theme");
+        root.dataset.theme = saved || "light";
+
+        function updateIcon() {
+            icon.src = icons[root.dataset.theme];
+        }
+
+        updateIcon();
+
+        toggle.addEventListener("click", () => {
+            root.dataset.theme =
+                root.dataset.theme === "dark" ? "light" : "dark";
+            localStorage.setItem("theme", root.dataset.theme);
+            updateIcon();
+        });
+    </script>
+</body>
+
+</html>

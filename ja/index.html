@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>FAQ</title>
+    <link rel="stylesheet" href="/faq-website/css/style.css">
+</head>
+
+<body>
+    <main>
+        <h1>よくあるTet質問</h1>
+<h2>1. 大学と専攻は何ですか。</h2>
+<p>大学：情報技術大学 - ホチミン市国家大学</p>
+<p>専攻：コンピュータ工学（CE）</p>
+<h2>2. CEでは何をしていますか。</h2>
+<p>CEは、プロセッサ、メモリシステム、組込みデバイス、ネットワークなどの構成要素の設計・開発に重点を置き、ソフトウェアが基盤となるハードウェアと効率的に連携できることを保証します。コンピュータ工学の技術者は、マイクロチップやロボティクスから、オペレーティングシステム、高性能計算（HPC）に至るまで幅広い分野に携わり、性能、信頼性、効率性を重視します。</p>
+<p>本専攻には、テレビや冷蔵庫の修理は含まれません。</p>
+<h2>3. いつ卒業しますか。</h2>
+<p>2026年後半か2027年初頭です。</p>
+<h2>4. インターンシップはいつ始まるんですか。</h2>
+<p>この学期、3月から6月までです。</p>
+<h2>5. 何歳ですか。</h2>
+<p>21歳です。</p>
+<h2>6. 恋人がいますか。</h2>
+<p>いいえ。</p>
+<h2>7. いつ結婚しますか。</h2>
+<p>多分10年後です。</p>
+
+    </main>
+    <div class="top-controls">
+        <select id="lang-select" onchange="changeLanguage(this.value)">
+            <option value="en" >English</option>
+            <option value="ja" >日本語</option>
+            <option value="vi" >Tiếng Việt</option>
+        </select>
+
+        <button id="theme-toggle" aria-label="Toggle theme">
+            <img id="theme-icon" alt="">
+        </button>
+    </div>
+
+    <script>
+        // ---- language switcher ----
+        function changeLanguage(lang) {
+            window.location.href = "/" + lang + "/";
+        }
+
+        const langSelect = document.getElementById("lang-select");
+
+        const match = location.pathname.match(/^\/(vi|en|ja)(\/|$)/);
+        if (match) langSelect.value = match[1];
+
+        langSelect.addEventListener("change", () => {
+            const lang = langSelect.value;
+            window.location.assign(window.location.origin + lang);
+        });
+        // ---- theme switcher ----
+        const toggle = document.getElementById("theme-toggle");
+        const icon = document.getElementById("theme-icon");
+        const root = document.documentElement;
+
+        const icons = {
+            light: "/assets/icons/sun.svg",
+            dark: "/assets/icons/moon.svg"
+        };
+
+        const saved = localStorage.getItem("theme");
+        root.dataset.theme = saved || "light";
+
+        function updateIcon() {
+            icon.src = icons[root.dataset.theme];
+        }
+
+        updateIcon();
+
+        toggle.addEventListener("click", () => {
+            root.dataset.theme =
+                root.dataset.theme === "dark" ? "light" : "dark";
+            localStorage.setItem("theme", root.dataset.theme);
+            updateIcon();
+        });
+    </script>
+</body>
+
+</html>
