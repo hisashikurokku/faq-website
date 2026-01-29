@@ -42,8 +42,7 @@
     </div>
 
     <script>
-        // ---- language switcher ----
-        const BASE_URL = "{{ '/' | url }}";
+        const BASE_URL = "/faq-website/";
 
         function changeLanguage(lang) {
             window.location.href = `${BASE_URL}${lang}/`;
@@ -63,7 +62,7 @@
                 changeLanguage(langSelect.value);
             });
         }
-        // ---- theme switcher ----
+ 
         const toggle = document.getElementById("theme-toggle");
         const icon = document.getElementById("theme-icon");
         const root = document.documentElement;
